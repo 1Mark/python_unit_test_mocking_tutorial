@@ -5,7 +5,10 @@ import pytest
 @pytest.mark.xfail(strict=True)
 def test_name_with_patch_context_manager_failure():
     """We are patching the method within the module.
-    But this isn't exactly what's used by Person"""
+    But this isn't exactly what's used by Person.
+    Since person.py had `from data_source import get_name`
+    if person.py had `import data_source` instead, this test would pass.
+    """
     the_person = Person()
     with patch("data_source.get_name", return_value="Bob"):
         name = the_person.name()
